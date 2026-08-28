@@ -7,55 +7,190 @@
 
 <style>
 
+:root{
+    --bg:#1b1a18;
+    --bg-elevated:#211f1c;
+    --surface:#242220;
+    --surface-2:#2c2924;
+    --surface-3:#37332d;
+    --border:#433d35;
+    --border-soft:#332f29;
+    --text:#f3ede2;
+    --text-muted:#b2a89a;
+    --text-faint:#847a6c;
+    --accent:#d97757;
+    --accent-hover:#c2664a;
+    --accent-soft:rgba(217,119,87,0.16);
+    --danger:#e0655c;
+    --danger-soft:rgba(224,101,92,0.14);
+    --success:#6fbf8b;
+    --warn:#e0a75e;
+    --radius-lg:18px;
+    --radius-md:12px;
+    --radius-sm:8px;
+    --shadow-sheet:0 -10px 34px rgba(0,0,0,0.5);
+    --safe-top:env(safe-area-inset-top,0px);
+    --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    -webkit-text-size-adjust:100%;
+    background:var(--bg);
+}
+
 #watermark{
-
     position:fixed;
-
     bottom:10px;
-
     right:15px;
-
     opacity:0.08;
-
     font-size:28px;
-
     font-weight:bold;
-
     pointer-events:none;
-	
-	display:none;
-
+    display:none;
 }
 
 body{
     margin:0;
-    padding:20px;
-    background:#1e1e1e;
-    color:white;
-    font-family:Arial,sans-serif;
+    padding:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:15px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+}
+
+body.noScroll{
+    overflow:hidden;
 }
 
 h1,h2,h3{
     margin-top:0;
+    font-weight:700;
+    letter-spacing:-0.01em;
 }
 
-.container{
-    display:grid;
-    grid-template-columns:400px 1fr;
-    gap:20px;
+h2{
+    font-size:15.5px;
+    margin-bottom:12px;
 }
 
-.panel{
-    background:#2a2a2a;
-    border-radius:10px;
-    padding:20px;
+/* ============ TOP APP BAR ============ */
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:calc(10px + var(--safe-top)) 12px 10px;
+    background:rgba(27,26,24,0.94);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
 }
+
+.topbarTitle{
+    flex:1;
+    min-width:0;
+    font-size:15.5px;
+    font-weight:700;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    margin:0;
+    color:var(--text);
+}
+
+.iconBtn{
+    flex-shrink:0;
+    width:40px;
+    height:40px;
+    min-height:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:var(--surface-2);
+    color:var(--text);
+    cursor:pointer;
+    font-size:19px;
+    padding:0;
+    margin:0;
+    transition:filter .15s,transform .1s;
+}
+
+.iconBtn:hover{
+    filter:brightness(1.12);
+}
+
+.iconBtn:active{
+    transform:scale(0.92);
+}
+
+.iconBtnAccent{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+}
+
+.iconBtn svg{
+    width:20px;
+    height:20px;
+    display:block;
+}
+
+/* ============ MAIN LAYOUT ============ */
+
+.mainContent{
+    max-width:760px;
+    margin:0 auto;
+    padding:16px 14px calc(48px + var(--safe-bottom));
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.section{
+    background:var(--surface);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius-lg);
+    padding:16px;
+}
+
+.sectionHeader{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:10px;
+    gap:10px;
+}
+
+.sectionHeader h2{
+    margin-bottom:0;
+}
+
+.sectionHint{
+    font-size:12.5px;
+    color:var(--text-faint);
+    margin:-6px 0 12px;
+}
+
+/* ============ FORM ELEMENTS ============ */
 
 label{
     display:block;
     margin-top:15px;
-    margin-bottom:5px;
-    font-weight:bold;
+    margin-bottom:6px;
+    font-weight:700;
+    font-size:13.5px;
+    color:var(--text);
 }
 
 input,
@@ -63,45 +198,94 @@ select,
 button{
     width:100%;
     box-sizing:border-box;
-    border:none;
-    border-radius:6px;
-    padding:10px;
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:11px 12px;
+    font-size:16px;
+    font-family:inherit;
+    background:var(--surface-2);
+    color:var(--text);
+    min-height:46px;
+}
+
+input::placeholder{
+    color:var(--text-faint);
+}
+
+input:focus,
+select:focus{
+    outline:2px solid var(--accent);
+    outline-offset:1px;
+    border-color:var(--accent);
+}
+
+button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+}
+
+select{
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1l6 6 6-6' fill='none' stroke='%23b2a89a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    padding-right:38px;
+}
+
+input[type="checkbox"],
+input[type="radio"]{
+    width:19px;
+    height:19px;
+    min-height:0;
+    padding:0;
+    margin:0;
+    accent-color:var(--accent);
+    flex-shrink:0;
 }
 
 button{
-    margin-top:12px;
-    font-weight:bold;
+    border:1px solid transparent;
+    font-weight:700;
+    font-size:15px;
     cursor:pointer;
-    transition:0.2s;
+    transition:filter .15s,transform .05s,opacity .15s;
+    min-height:46px;
 }
 
 button:hover{
-    opacity:0.92;
+    filter:brightness(1.08);
 }
 
-.addBtn{
-    background:#198754;
-    color:white;
+button:active{
+    transform:scale(0.98);
 }
 
+.addBtn,
 .saveBtn{
-    background:#0d6efd;
-    color:white;
+    background:var(--accent);
+    color:#fff;
+    border-color:var(--accent);
 }
 
-.importBtn{
-    background:#6f42c1;
-    color:white;
+.importBtn,
+.printBtn,
+.editBtn{
+    background:var(--surface-3);
+    color:var(--text);
+    border-color:var(--border);
 }
 
-.clearBtn{
-    background:#dc3545;
-    color:white;
+.clearBtn,
+.deleteBtn{
+    background:transparent;
+    color:var(--danger);
+    border-color:var(--danger);
 }
 
-.printBtn{
-    background:#fd7e14;
-    color:white;
+.clearBtn:hover,
+.deleteBtn:hover{
+    background:var(--danger-soft);
 }
 
 .buttonRow{
@@ -111,12 +295,12 @@ button:hover{
 
 .buttonRow button{
     width:50%;
+    margin-top:12px;
 }
 
 .addUndoRow{
     display:flex;
     gap:10px;
-    margin-top:12px;
     align-items:stretch;
 }
 
@@ -130,7 +314,7 @@ button:hover{
 .jobNameRow input{
     flex:1;
     margin-top:0;
-    min-height:44px;
+    min-height:46px;
 }
 
 .colorToggleBtn{
@@ -139,13 +323,14 @@ button:hover{
     max-width:96px;
     margin-top:0;
     padding:0 10px;
-    min-height:44px;
+    min-height:46px;
     line-height:1;
     display:flex;
     align-items:center;
     justify-content:center;
     font-weight:800;
-    border-radius:6px;
+    border-radius:var(--radius-sm);
+    flex-shrink:0;
 }
 
 .priceSettings{
@@ -153,6 +338,8 @@ button:hover{
     flex-direction:column;
     gap:10px;
     margin-top:12px;
+    padding-top:12px;
+    border-top:1px solid var(--border-soft);
 }
 
 .priceBlock{
@@ -163,7 +350,7 @@ button:hover{
 
 .priceBlock + .priceBlock{
     padding-top:10px;
-    border-top:1px solid #404040;
+    border-top:1px solid var(--border-soft);
 }
 
 .settingsActionRow{
@@ -176,25 +363,29 @@ button:hover{
     width:auto;
     min-width:160px;
     margin:0;
-    padding:8px 12px;
+    padding:9px 14px;
+    min-height:40px;
 }
 
 .priceBlockTitle{
-    font-weight:bold;
-    color:#eaeaea;
-    line-height:1.1;
+    font-weight:700;
+    color:var(--text);
+    font-size:13px;
+    line-height:1.2;
 }
 
 .priceMatrix{
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:4px 10px;
+    gap:6px 10px;
 }
 
 .priceHead{
-    font-size:12px;
-    font-weight:bold;
-    color:#a9a9a9;
+    font-size:11px;
+    font-weight:700;
+    color:var(--text-muted);
+    text-transform:uppercase;
+    letter-spacing:.03em;
     line-height:1;
     padding-left:2px;
 }
@@ -202,42 +393,55 @@ button:hover{
 .priceMatrix input{
     margin-top:0;
     padding:8px 10px;
-    min-height:36px;
-}
-
-.addUndoRow .addBtn{
-    flex:1;
-    width:auto;
-    margin-top:0;
+    min-height:38px;
+    font-size:15px;
 }
 
 .undoBtn{
-    width:56px;
-    min-width:56px;
-    max-width:56px;
+    width:54px;
+    min-width:54px;
+    max-width:54px;
     aspect-ratio:1;
     padding:0;
     margin-top:0;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:24px;
+    font-size:23px;
     line-height:1;
+    background:var(--surface-3);
+    color:var(--text);
+    border-color:var(--border);
 }
 
 .undoBtn:disabled{
-    opacity:0.45;
+    opacity:0.4;
     cursor:not-allowed;
+}
+
+/* ============ TABLES ============ */
+
+.tableScroll{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    border-radius:var(--radius-md);
+    border:1px solid var(--border-soft);
 }
 
 table{
     table-layout:auto;
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.5px;
 }
 
 th,
 td{
     width:1%;
     white-space:nowrap;
+    border:1px solid var(--border-soft);
+    padding:9px 10px;
+    text-align:left;
 }
 
 th:nth-child(2),
@@ -246,209 +450,30 @@ td:nth-child(2){
     white-space:normal;
 }
 
-th,
-td{
-    border:1px solid #555;
-    padding:8px;
-    text-align:left;
-}
-
 th{
-    background:#111;
+    background:var(--surface-3);
+    color:var(--text-muted);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    font-weight:700;
 }
 
 tbody tr:nth-child(odd){
-    background:#252525;
+    background:var(--surface);
 }
 
 tbody tr:nth-child(even){
-    background:#313131;
-}
-
-.topDashboard{
-    display:grid;
-    grid-template-columns:minmax(0,1.75fr) minmax(0,220px);
-    gap:16px;
-    align-items:start;
-    margin-bottom:20px;
-}
-
-.previewCard{
-    min-width:0;
-}
-
-.previewCard canvas{
-    margin-top:0;
-    display:block;
-}
-
-.summary{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    margin-bottom:0;
-}
-
-.statsColumn{
-    min-width:0;
-}
-
-.card{
-    background:#151515;
-    padding:10px;
-    border-radius:8px;
-}
-
-.card strong{
-    display:block;
-    margin-bottom:5px;
-    color:#7db3ff;
-}
-
-.jobItem{
-    background:#1b1b1b;
-    border:2px solid #555;
-    border-radius:8px;
-    padding:10px;
-    margin-top:10px;
-}
-
-.jobButtons{
-    display:flex;
-    gap:10px;
-    margin-top:10px;
-}
-
-.jobButtons button{
-    margin-top:0;
-}
-
-.editBtn{
-    background:#0d6efd;
-    color:white;
-}
-
-.deleteBtn{
-    background:#dc3545;
-    color:white;
-}
-
-.hidden{
-    display:none;
-}
-
-.section{
-    margin-top:20px;
-}
-
-canvas{
-    width:100%;
-    background:white;
-    border-radius:8px;
-    margin-top:10px;
-}
-
-.radioCompact{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    margin-top:12px;
-    flex-wrap:wrap;
-}
-
-.radioCompact span{
-    font-weight:bold;
-    min-width:90px;
-}
-
-.radioCompact label{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    margin:0;
-    font-weight:normal;
-    cursor:pointer;
-}
-
-.radioCompact input{
-    width:auto;
-    margin:0;
-}
-
-/* PANOURI (stânga/dreapta/sus) */
-
-.panelsList{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    margin-top:8px;
-}
-
-.panelListItem{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:8px;
-    background:#242424;
-    border:1px solid #555;
-    border-radius:6px;
-    padding:6px 10px;
-    font-size:14px;
-}
-
-.panelRemoveBtn{
-    background:#dc3545;
-    color:white;
-    border:none;
-    border-radius:4px;
-    width:24px;
-    height:24px;
-    line-height:24px;
-    padding:0;
-    margin:0;
-    cursor:pointer;
-    flex-shrink:0;
-}
-
-.addPanelBtn{
-    background:#3a3a3a;
-    color:#fff;
-    border:1px dashed #888;
-    margin-top:8px;
-}
-
-.panelForm{
-    background:#1f1f1f;
-    border:1px solid #555;
-    border-radius:8px;
-    padding:12px;
-    margin-top:8px;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-}
-
-.panelForm label{
-    font-weight:bold;
-    margin:0;
-    font-size:13px;
-}
-
-.panelForm select,
-.panelForm input[type="number"]{
-    margin:0;
-}
-
-.panelForm .radioCompact{
-    margin-top:0;
-    gap:18px;
+    background:var(--surface-2);
 }
 
 #accessoriesTable input[type="number"]{
-    width:92px;
-    min-width:92px;
+    width:88px;
+    min-width:88px;
     margin:0;
-    padding:6px 8px;
+    padding:7px 8px;
+    min-height:36px;
+    font-size:14px;
 }
 
 #accessoriesTable th:last-child,
@@ -466,15 +491,18 @@ canvas{
     display:table-cell;
 }
 
-.accessoryHeaderGearBtn{
+.accessoryHeaderGearBtn,
+.accessoryHeaderGearBtn1{
     width:auto;
-    padding:4px 8px;
+    min-height:0;
+    padding:5px 9px;
     margin:0;
-    background:#333;
-    color:white;
-    border:none;
-    border-radius:6px;
+    background:var(--surface-3);
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:7px;
     line-height:1;
+    font-size:13px;
 }
 
 .accessorySelectAllWrap,
@@ -485,22 +513,253 @@ canvas{
     gap:8px;
 }
 
+/* ============ TOP DASHBOARD (preview + stats) ============ */
+
+.topDashboard{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-bottom:0;
+}
+
+.previewCard{
+    min-width:0;
+    padding:10px;
+}
+
+.previewCard canvas{
+    margin-top:0;
+    display:block;
+}
+
+.summary{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:0;
+}
+
+.summary .card:first-child{
+    grid-column:1 / -1;
+}
+
+.statsColumn{
+    min-width:0;
+}
+
+@media (min-width:760px){
+    .topDashboard{
+        flex-direction:row;
+        align-items:flex-start;
+    }
+    .previewCard{
+        flex:1.7;
+    }
+    .summary{
+        flex:1;
+        grid-template-columns:1fr;
+        min-width:230px;
+    }
+    .summary .card:first-child{
+        grid-column:auto;
+    }
+}
+
+.card{
+    background:var(--surface-2);
+    padding:12px 14px;
+    border-radius:var(--radius-md);
+    border:1px solid var(--border-soft);
+}
+
+.card strong{
+    display:block;
+    margin-bottom:6px;
+    color:var(--accent);
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    font-weight:800;
+}
+
+.card > span{
+    font-size:16px;
+    font-weight:700;
+    color:var(--text);
+}
+
+canvas{
+    width:auto;
+    max-width:100%;
+    height:auto;
+    background:white;
+    border-radius:var(--radius-sm);
+    margin-top:10px;
+}
+
+/* ============ JOB ITEMS / PIECES LIST ============ */
+
+.jobItem{
+    background:var(--surface-2);
+    border:2px solid var(--border);
+    border-radius:var(--radius-md);
+    padding:12px 14px;
+    margin-top:12px;
+    font-size:14px;
+    line-height:1.55;
+}
+
+.jobItem:first-child{
+    margin-top:0;
+}
+
+.jobButtons{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+}
+
+.jobButtons button{
+    margin-top:0;
+}
+
+#jobList:empty::before{
+    content:"Nicio piesă adăugată încă. Apasă butonul + din bara de sus ca să adaugi prima piesă.";
+    display:block;
+    text-align:center;
+    color:var(--text-muted);
+    font-size:13.5px;
+    line-height:1.5;
+    padding:22px 10px;
+}
+
+.hidden{
+    display:none;
+}
+
+.no-print{}
+
+.radioCompact{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    row-gap:12px;
+    margin-top:14px;
+    flex-wrap:wrap;
+}
+
+.radioCompact > span{
+    font-weight:700;
+    min-width:auto;
+}
+
+.radioCompact label{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    margin:0;
+    font-weight:500;
+    cursor:pointer;
+    min-height:30px;
+}
+
+.radioCompact input{
+    width:19px;
+    margin:0;
+}
+
+/* PANOURI (stânga/dreapta/sus) */
+
+.panelsList{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-top:10px;
+}
+
+.panelListItem{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    background:var(--surface-3);
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:7px 10px;
+    font-size:13.5px;
+}
+
+.panelRemoveBtn{
+    background:var(--danger);
+    color:white;
+    border:none;
+    border-radius:7px;
+    width:28px;
+    height:28px;
+    min-height:0;
+    line-height:28px;
+    padding:0;
+    margin:0;
+    cursor:pointer;
+    flex-shrink:0;
+    font-size:14px;
+}
+
+.addPanelBtn{
+    background:transparent;
+    color:var(--text-muted);
+    border:1.5px dashed var(--border);
+    margin-top:10px;
+}
+
+.panelForm{
+    background:var(--surface-3);
+    border:1px solid var(--border);
+    border-radius:var(--radius-md);
+    padding:14px;
+    margin-top:10px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.panelForm label{
+    font-weight:700;
+    margin:0;
+    font-size:12.5px;
+    color:var(--text-muted);
+}
+
+.panelForm select,
+.panelForm input[type="number"]{
+    margin:0;
+}
+
+.panelForm .radioCompact{
+    margin-top:0;
+    gap:18px;
+}
+
 .featureActionRow{
     display:flex;
     gap:10px;
     flex-wrap:wrap;
-    margin-top:12px;
+    margin-top:14px;
 }
 
 .featureActionRow button{
     width:auto;
-    flex:1 1 220px;
+    flex:1 1 200px;
     margin-top:0;
 }
 
 .reportCard{
-    margin-top:12px;
+    margin-top:14px;
     overflow:auto;
+    background:var(--surface-2);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius-md);
+    padding:14px;
 }
 
 .reportSummary{
@@ -511,10 +770,11 @@ canvas{
 }
 
 .reportStat{
-    background:#151515;
+    background:var(--surface-3);
     padding:8px 10px;
-    border-radius:6px;
-    min-width:140px;
+    border-radius:var(--radius-sm);
+    min-width:130px;
+    font-size:13px;
 }
 
 .reportTable{
@@ -524,14 +784,15 @@ canvas{
 
 .reportTable th,
 .reportTable td{
-    border:1px solid #555;
+    border:1px solid var(--border-soft);
     padding:6px 8px;
     text-align:left;
     vertical-align:top;
+    font-size:13px;
 }
 
 .reportTable th{
-    background:#111;
+    background:var(--surface-3);
 }
 
 .cutBarList{
@@ -539,10 +800,6 @@ canvas{
     padding-left:18px;
 }
 
-/* Tabelul de comandă sticlă: coloana Referințe poate acumula multe
-   "Piesa N" (ex. la uși duble / geamuri identice), așa că lățimea
-   tabelului rămâne fixă (100%) și textul se rupe pe mai multe
-   rânduri în loc să lărgească tot tabelul și să strice layout-ul. */
 .glassOrderTable{
     table-layout:fixed;
 }
@@ -569,9 +826,6 @@ canvas{
 .cutBarList li{
     margin:2px 0;
 }
-
-/* Tabel compact pentru fiecare bara de debitare. Coloanele raman aliniate
-   chiar daca textele au lungimi diferite. */
 
 .cutOptimizationTable{
     width:100%;
@@ -610,7 +864,7 @@ canvas{
 .cutOptimizationTable .cutGroupCell{
     background:inherit;
     vertical-align:middle;
-    font-weight:600;
+    font-weight:700;
 }
 
 .cutOptimizationTable .cutMetricCell{
@@ -620,15 +874,13 @@ canvas{
 .cutCenterCell{
     text-align:center !important;
     white-space:nowrap;
-    font-weight:600;
+    font-weight:700;
 }
 
-/* Randul cu reprezentarea vizuala a barei (SVG), inserat sub ultima
-   taiere a fiecarei bare din cutOptimizationTable. */
 .cutOptimizationTable .cutBarVisualRow > td{
     border-top:none;
     padding:14px 10px 10px;
-    background:#181818;
+    background:var(--bg-elevated);
 }
 
 .cutBarVisualWrap{
@@ -646,7 +898,7 @@ canvas{
     gap:16px;
     flex-wrap:wrap;
     align-items:center;
-    color:#aaa;
+    color:var(--text-muted);
     font-size:12px;
     margin:-2px 0 10px;
 }
@@ -695,38 +947,139 @@ canvas{
 .cutDetailTable td:nth-child(2),
 .cutDetailTable td:nth-child(3){
     white-space:nowrap;
-    font-weight:600;
+    font-weight:700;
 }
 
-.cutAngleBadge{display:inline-block;margin-left:6px;padding:1px 5px;border-radius:4px;font-size:11px;font-weight:bold;background:#2d2d2d;color:#f1f1f1}
+.cutAngleBadge{display:inline-block;margin-left:6px;padding:1px 5px;border-radius:4px;font-size:11px;font-weight:bold;background:var(--surface-3);color:var(--text)}
 .cutAngleBadge.miter{border:1px solid #d6b35a}
 .cutAngleBadge.square{border:1px solid #7aa7d9}
 
 .glassOrderNote{
     margin-top:8px;
     font-size:13px;
-    color:#aaa;
+    color:var(--text-muted);
 }
 
-
-/* Pe telefon păstrăm tabelul de optimizare identic cu desktop-ul.
-   Nu comprimăm coloanele; cardul oferă scroll orizontal. */
-@media (max-width: 1100px){
-  /* Mobil: optimizarea rămâne identică vizual cu desktopul; doar containerul face scroll orizontal. */
+@media (max-width:1100px){
   .reportCard{overflow-x:auto !important;-webkit-overflow-scrolling:touch;}
   .cutOptimizationTable{min-width:980px !important;width:980px !important;}
   .cutOptimizationTable th,.cutOptimizationTable td{white-space:nowrap !important;}
   .cutOptimizationTable td:nth-child(2){white-space:normal !important;min-width:300px;}
 }
 
+/* ============ BOTTOM SHEETS / OVERLAYS ============ */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(10,9,7,0.62);
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    z-index:100;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease;
+    padding:0;
+}
+
+.overlay.sheetOpen{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.sheet{
+    background:var(--bg-elevated);
+    width:100%;
+    max-width:640px;
+    max-height:88vh;
+    border-radius:20px 20px 0 0;
+    display:flex;
+    flex-direction:column;
+    box-shadow:var(--shadow-sheet);
+    transform:translateY(100%);
+    transition:transform .25s cubic-bezier(.32,.72,0,1);
+}
+
+.overlay.sheetOpen .sheet{
+    transform:translateY(0);
+}
+
+.sheetHandle{
+    width:38px;
+    height:4px;
+    border-radius:2px;
+    background:var(--border);
+    margin:10px auto 0;
+    flex-shrink:0;
+}
+
+.sheetHeader{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 18px 12px;
+    flex-shrink:0;
+    border-bottom:1px solid var(--border-soft);
+    gap:10px;
+}
+
+.sheetHeader h2{
+    font-size:16.5px;
+    margin:0;
+}
+
+.sheetBody{
+    padding:16px 18px 6px;
+    overflow-y:auto;
+    flex:1;
+    -webkit-overflow-scrolling:touch;
+}
+
+.sheetBody > label:first-child{
+    margin-top:0;
+}
+
+.sheetFooter{
+    padding:12px 18px calc(14px + var(--safe-bottom));
+    border-top:1px solid var(--border-soft);
+    flex-shrink:0;
+    background:var(--bg-elevated);
+}
+
+@media (min-width:700px){
+    .overlay{
+        align-items:center;
+        padding:24px;
+    }
+    .sheet{
+        border-radius:20px;
+        max-height:85vh;
+        transform:translateY(10px) scale(.98);
+        opacity:0;
+        transition:transform .2s ease,opacity .2s ease;
+    }
+    .overlay.sheetOpen .sheet{
+        transform:translateY(0) scale(1);
+        opacity:1;
+    }
+    .sheetHandle{
+        display:none;
+    }
+}
+
+/* ============ PRINT ============ */
+
 @media print{
+
+    .no-print{
+        display:none !important;
+    }
+
     .featureActionRow{
         display:none !important;
     }
 
-    /* Rapoartele de tăiere / sticlă încep după accesoriile totale, pe o
-       pagină nouă, astfel încât tabelul să nu fie rupt imediat după tabelul
-       de accesorii. */
     #cuttingOptimizationSection,
     #glassOrderSection{
         break-before:page !important;
@@ -756,35 +1109,6 @@ canvas{
     .reportTable td{
         padding:3px 5px;
     }
-}
-
-
-@media (max-width: 1100px){
-
-    .topDashboard{
-        grid-template-columns:1fr;
-    }
-
-}
-@media print{
-
-table{
-    border-collapse:collapse;
-}
-
-table,
-th,
-td{
-    border:1px solid #000 !important;
-}
-
-canvas{
-    width:100% !important;
-    height:auto !important;
-    display:block;
-    box-sizing:border-box;
-    border:1px solid #000;
-}
 
     @page{
         size:A4 portrait;
@@ -799,21 +1123,39 @@ canvas{
         zoom:0.72;
     }
 
-    .leftPanel{
-        display:none !important;
+    .topbar{
+        position:static !important;
+        background:none !important;
+        backdrop-filter:none !important;
+        -webkit-backdrop-filter:none !important;
+        border:none !important;
+        padding:0 !important;
     }
 
-    .container{
-        display:block;
+    .topbarTitle{
+        white-space:normal !important;
+        overflow:visible !important;
+        color:black !important;
+        font-size:24px !important;
+        margin-bottom:10px !important;
     }
 
-    .panel{
+    .mainContent{
+        display:block !important;
+        max-width:none !important;
+        padding:0 !important;
+        margin:0 !important;
+    }
+
+    .section{
         background:white !important;
         color:black !important;
         padding:0;
         margin:0;
+        margin-top:10px;
         box-shadow:none;
         border:none;
+        border-radius:0;
     }
 
     h1{
@@ -826,9 +1168,12 @@ canvas{
         margin-top:10px;
         margin-bottom:5px;
         font-size:18px;
+        color:black;
     }
 
     .summary{
+        display:flex !important;
+        flex-direction:column !important;
         margin-bottom:8px;
         gap:5px;
     }
@@ -845,6 +1190,10 @@ canvas{
         margin-bottom:3px;
     }
 
+    .card > span{
+        color:black;
+    }
+
     .section{
         margin-top:10px;
     }
@@ -859,6 +1208,12 @@ canvas{
         color:black;
         font-size:11px;
         margin-top:5px;
+    }
+
+    table,
+    th,
+    td{
+        border:1px solid #000 !important;
     }
 
     tbody tr:nth-child(odd){
@@ -880,6 +1235,11 @@ canvas{
         white-space:nowrap;
     }
 
+    .tableScroll{
+        overflow:visible;
+        border:none;
+    }
+
     .topDashboard{
         display:grid !important;
         grid-template-columns:minmax(0,1fr) 230px !important;
@@ -894,6 +1254,9 @@ canvas{
     .statsColumn{
         break-inside:avoid;
         page-break-inside:avoid;
+        background:white !important;
+        border:none;
+        padding:0;
     }
 
     .previewCard canvas{
@@ -901,14 +1264,19 @@ canvas{
         max-height:420px !important;
     }
 
-    .accessoryHeaderGearBtn{
+    canvas{
+        width:100% !important;
+        height:auto !important;
+        display:block;
+        box-sizing:border-box;
+        border:1px solid #000;
+    }
+
+    .accessoryHeaderGearBtn,
+    .accessoryHeaderGearBtn1{
         display:none !important;
     }
-	
-	    .accessoryHeaderGearBtn1{
-        display:none !important;
-    }
-	
+
     .summary{
         gap:6px !important;
     }
@@ -928,449 +1296,359 @@ AUDIT FIX 2026-08-22
 
 <body>
 
-<h1 id="mainTitle">Calculatie CLIENT 03/06/2026</h1>
-<div class="container">
+<div class="topbar">
+    <h1 id="mainTitle" class="topbarTitle">Calculatie CLIENT 03/06/2026</h1>
 
-<div class="panel leftPanel">
+    <button type="button" class="iconBtn no-print" onclick="showProjectSheet()" title="Meniu proiect" aria-label="Meniu proiect">⋮</button>
 
-
-<div class="jobNameRow">
-    <input type="text" id="jobName" value="Calculatie CLIENT" oninput="updateMainTitle()">
-
-    <button type="button" class="colorToggleBtn" id="colorToggleBtn" onclick="toggleJobColor()" style="background: rgb(242, 242, 242); color: rgb(17, 17, 17); border: 2px solid rgb(245, 71, 71);">ALB</button>
+    <button type="button" class="iconBtn iconBtnAccent no-print" onclick="openAddPieceSheet()" title="Adaugă piesă" aria-label="Adaugă piesă" style="font-size:24px;">+</button>
 </div>
 
-<label>Configurație</label>
-
-<select id="config">
-
-<option value="sliding_1">
-Glisantă 1 Ușă
-</option>
-
-<option value="sliding_2">
-Glisantă 2 Uși
-</option>
-
-<option value="sliding_3">
-Glisantă 3 Uși
-</option>
-
-<option value="sliding_4">
-Glisantă 4 Uși
-</option>
-
-
-<option value="sliding_4_nas">
-Glisantă 4 Uși cu Nas
-</option>
-
-<option value="sliding_6_nas">
-Glisantă 6 Uși cu Nas (3 șine)
-</option>
-
-<option value="single_door_inside">
-Ușă Deschidere Interioară
-</option>
-
-<option value="single_door_outside">
-Ușă Deschidere Exterioară
-</option>
-
-<option value="double_door_inside">
-Ușă Dublă Deschidere Interioară
-</option>
-
-<option value="double_door_outside">
-Ușă Dublă Deschidere Exterioară
-</option>
-
-<option value="fixed_window">
-Fereastră Fixă
-</option>
-
-<option value="mobile_window">
-Fereastră Mobilă
-</option>
-
-<option value="double_window_inversor">
-Fereastră Dublă cu Inversor
-</option>
-
-<option value="double_window_fixed">
-Fereastră Dublă cu o Parte Fixă
-</option>
-
-</select>
-
-<div id="doorOptions" style="display: none;">
-
-<div class="radioCompact">
-
-<label id="thermalBreakRow" style="display: none;">
-<input type="checkbox" id="thermalBreak">
-Rupere Termică
-</label>
-
-<label id="thresholdRow" style="display: none;">
-<input type="checkbox" id="threshold" disabled="">
-Prag
-</label>
-
-<label id="traversaRow" style="display: none;">
-<input type="checkbox" id="doorTraversa">
-Traversă
-</label>
-
-<div id="traversaOptions" style="display:none; margin-top:10px; padding:10px; border:1px solid #444; border-radius:6px;">
-    <label style="margin:0 0 5px 0;">Orientare traversă</label>
-    <select id="traversaOrientation" onchange="updateTraversaControls(true)">
-        <option value="horizontal">Orizontală</option>
-        <option value="vertical">Verticală</option>
-    </select>
-
-    <label id="traversaPositionLabel" style="margin:10px 0 5px 0;">Poziție de sus (mm)</label>
-    <input type="text" inputmode="decimal" autocomplete="off" id="traversaPosition" value="1050" oninput="updateTraversaPositionHint()" onchange="normalizeTraversaPositionInput()" onblur="normalizeTraversaPositionInput()">
-
-    <div id="traversaPositionHint" style="margin-top:6px;color:#aaa;font-size:12px;line-height:1.35;">Implicit: 50% / 50%. La verticală poziția se măsoară din stânga.</div>
-</div>
-
-
-
-<div id="tocContinuuRow" style="display: none;">
-<label>
-<input type="checkbox" id="tocContinuu" checked="">
-Toc Continuu
-</label>
-</div>
-
-<div id="sertizareRow" style="display: none;">
-<label id="sertizareLabel" style="display: none;">
-<input type="checkbox" id="sertizare">
-Sertizare
-</label>
-</div>
-
-<div id="giesseHingesRow" style="display: none;">
-<label>
-<input type="checkbox" id="giesseHinges" onchange="giesseHingesManuallySet=true;">
-Balamale GIESSE (uși grele)
-</label>
-</div>
-
-
-<div id="individualWidthsRow" style="display:none; margin-top:12px;">
-<label style="display:flex;align-items:center;gap:6px;margin:0 0 8px 0;font-weight:bold;">
-<input type="checkbox" id="individualWidthsEnabled" onchange="updateIndividualWidthsOptions()" style="width:auto;margin:0;">
-Lățimi individuale
-</label>
-<div id="individualWidthsInputs" style="display:none;grid-template-columns:1fr 1fr;gap:10px;">
-<div>
-<label id="individualWidth1Label" style="margin:0 0 5px 0;font-weight:bold;">Canat / parte 1 (mm)</label>
-<input type="text" inputmode="decimal" autocomplete="off" id="individualWidth1" value="">
-</div>
-<div>
-<label id="individualWidth2Label" style="margin:0 0 5px 0;font-weight:bold;">Canat / parte 2 (mm)</label>
-<input type="text" inputmode="decimal" autocomplete="off" id="individualWidth2" value="">
-</div>
-</div>
-<div id="individualWidthsHint" style="margin-top:6px;color:#aaa;font-size:12px;line-height:1.3;"></div>
-</div>
-
-<div id="fixedPartSideRow" style="display:none; margin-top:10px;">
-<label style="display:flex;align-items:center;gap:6px;margin:0;font-weight:bold;">
-<input type="checkbox" id="fixedPartOnLeft" checked style="width:auto;margin:0;">
-Partea fixă în stânga (debifat = dreapta) — doar desenul vizual, nu schimbă calculul
-</label>
-</div>
-
-</div>
-</div>
-
-<div class="radioCompact">
-
-
-<label id="glassLabelTermopan">
-<input type="radio" name="glass" value="termopan" checked="">
-<span>Termopan</span>
-</label>
-
-<label id="glassLabelSimple">
-<input type="radio" name="glass" value="simple">
-<span>Sticlă Simplă</span>
-</label>
-
-<label id="glassLabelRt32" style="display: none;">
-<input type="radio" name="glass" value="rt32">
-<span>32mm</span>
-</label>
-
-</div>
-
-
-<label>Lățime (mm)</label>
-
-<input type="number" id="width" value="1000">
-
-<label>Înălțime (mm)</label>
-
-<input type="number" id="height" value="2100">
-
-<div class="addUndoRow">
-
-<button class="addBtn" id="addUpdateBtn" onclick="addOrUpdatePiece()">Adaugă</button>
-
-<button class="undoBtn" id="undoBtn" onclick="undoLastAction()" title="UNDO (Ctrl+Z)" aria-label="Undo" disabled="">
-↺
-</button>
-
-</div>
-
-<div class="buttonRow">
-
-<button class="saveBtn" onclick="saveProject()">
-Salvează Lucrare
-</button>
-
-<button class="importBtn" onclick="document.getElementById('importFile').click()">
-Importă Lucrare
-</button>
-
-</div>
-
-<input type="file" id="importFile" class="hidden" accept=".json">
-
-<div class="buttonRow">
-
-<button class="printBtn" onclick="document.title =
-    'Oferta_' +
-    new Date()
-    .toISOString()
-    .slice(0,10);window.print()">
-Print / PDF
-</button>
-
-<button class="clearBtn" onclick="clearJob()">
-Șterge Tot
-</button>
-
-</div>
-
-<div class="section">
-
-<h2>Piese în Lucrare</h2>
-
-<div id="jobList"></div>
-
-</div>
-
-</div>
-
-<div class="panel">
-
-<div class="topDashboard">
-
-    <div class="previewCard card">
-
-        <canvas id="previewCanvas" width="1110" height="230"></canvas>
-
-    </div>
-
-    <div class="summary statsColumn">
-
-        <div class="card">
-
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-
-                <strong>Total KG | Pret</strong>
-
-                <button class="accessoryHeaderGearBtn1" onclick="toggleSettings()" style="
-                        width:auto;
-                        padding:1px 4px;
-                        background:#333;
-                        color:white;
-                        margin:0;
-                    ">
-                    ⚙
-                </button>
+<div class="mainContent">
+
+    <div class="section">
+
+        <div class="topDashboard">
+
+            <div class="previewCard card">
+                <canvas id="previewCanvas" width="1110" height="230"></canvas>
+            </div>
+
+            <div class="summary statsColumn">
+
+                <div class="card">
+
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <strong>Total KG | Pret</strong>
+                        <button class="accessoryHeaderGearBtn1" onclick="toggleSettings()" aria-label="Setări prețuri">⚙</button>
+                    </div>
+
+                    <span id="totalWeight">0.00 kg | 0.00 RON</span>
+
+                    <div id="settingsPanel" class="priceSettings" style="display: none;">
+                        <div class="priceBlock">
+                            <div class="priceBlockTitle">Preț / kg standard (RON)</div>
+                            <div class="priceMatrix">
+                                <div class="priceHead">alb</div>
+                                <div class="priceHead">gri</div>
+                                <input type="number" id="pricePerKgInput" value="44" oninput="savePricePerKg()" onchange="savePricePerKg()">
+                                <input type="number" id="pricePerKgGriInput" value="45" oninput="savePricePerKgGri()" onchange="savePricePerKgGri()">
+                            </div>
+                        </div>
+
+                        <div class="priceBlock">
+                            <div class="priceBlockTitle">Preț / kg rupere termică (RON)</div>
+                            <div class="priceMatrix">
+                                <div class="priceHead">alb</div>
+                                <div class="priceHead">gri</div>
+                                <input type="number" id="pricePerKgRtInput" value="53" oninput="savePricePerKgRt()" onchange="savePricePerKgRt()">
+                                <input type="number" id="pricePerKgRtGriInput" value="55" oninput="savePricePerKgRtGri()" onchange="savePricePerKgRtGri()">
+                            </div>
+                        </div>
+
+                        <div class="priceBlock">
+                            <div class="priceBlockTitle">Preț / prag (RON)</div>
+                            <div class="priceMatrix">
+                                <div class="priceHead">Fara RT</div>
+                                <div class="priceHead">Cu RT</div>
+                                <input type="number" id="pricePragInput" value="150" oninput="savePricePrag()" onchange="savePricePrag()">
+                                <input type="number" id="pricePragRtInput" value="500" oninput="savePricePragRt()" onchange="savePricePragRt()">
+                            </div>
+                        </div>
+                        <div class="settingsActionRow">
+                            <button type="button" class="saveBtn" onclick="saveHtmlSettings()">
+                                Salveaza preturi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <strong>Total Piese</strong>
+                    <span id="totalPieces">0</span>
+                </div>
+
+                <div class="card">
+                    <strong>Total Bare</strong>
+                    <span id="totalBars">0</span>
+                </div>
+
+                <div class="card">
+                    <strong>Total Profile</strong>
+                    <span id="totalProfiles">0.00 ml</span>
+                </div>
+
+                <div class="card" style="display:none">
+                    <strong>Total Pierderi</strong>
+                    <span id="totalWaste">0.00 ml</span>
+                </div>
 
             </div>
 
-            <span id="totalWeight">0.00 kg | 0.00 RON</span>
+        </div>
 
-            <div id="settingsPanel" class="priceSettings" style="display: none; margin-top: 12px;">
-                <div class="priceBlock">
-                    <div class="priceBlockTitle">Preț / kg standard (RON)</div>
-                    <div class="priceMatrix">
-                        <div class="priceHead">alb</div>
-                        <div class="priceHead">gri</div>
-                        <input type="number" id="pricePerKgInput" value="44" oninput="savePricePerKg()" onchange="savePricePerKg()">
-                        <input type="number" id="pricePerKgGriInput" value="45" oninput="savePricePerKgGri()" onchange="savePricePerKgGri()">
-                    </div>
-                </div>
+    </div>
 
-                <div class="priceBlock">
-                    <div class="priceBlockTitle">Preț / kg rupere termică (RON)</div>
-                    <div class="priceMatrix">
-                        <div class="priceHead">alb</div>
-                        <div class="priceHead">gri</div>
-                        <input type="number" id="pricePerKgRtInput" value="53" oninput="savePricePerKgRt()" onchange="savePricePerKgRt()">
-                        <input type="number" id="pricePerKgRtGriInput" value="55" oninput="savePricePerKgRtGri()" onchange="savePricePerKgRtGri()">
-                    </div>
-                </div>
+    <div class="section no-print">
+        <h2>Piese în Lucrare</h2>
+        <div id="jobList"></div>
+    </div>
 
-                <div class="priceBlock">
-                    <div class="priceBlockTitle">Preț / prag (RON)</div>
-                    <div class="priceMatrix">
-                        <div class="priceHead">Fara RT</div>
-                        <div class="priceHead">Cu RT</div>
-                        <input type="number" id="pricePragInput" value="150" oninput="savePricePrag()" onchange="savePricePrag()">
-                        <input type="number" id="pricePragRtInput" value="500" oninput="savePricePragRt()" onchange="savePricePragRt()">
+    <div class="section">
+        <h2>Profile Totale</h2>
+
+        <div class="tableScroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cod</th>
+                        <th>Profil</th>
+                        <th>Bare</th>
+                        <th>Kg/Bară</th>
+                        <th>Kg Total</th>
+                        <th>ml</th>
+                        <th>Pierdere</th>
+                    </tr>
+                </thead>
+                <tbody id="profilesTable"></tbody>
+            </table>
+        </div>
+
+        <div id="profileWeightSummary" style="margin-top:10px; font-weight:bold;text-align: right;">STD: 0.00 kg | 0.00 RON<br>RT: 0.00 kg | 0.00 RON<br>Total: 0.00 RON</div>
+    </div>
+
+    <div class="section">
+        <h2>Accesorii Totale</h2>
+
+        <div class="tableScroll">
+            <table class="accessoryTable">
+                <thead>
+                    <tr>
+                        <th>Cod</th>
+                        <th>Accesoriu</th>
+                        <th>Cantitate</th>
+                        <th class="accessoryUnitPriceCol">Pret Unitar</th>
+                        <th>
+                            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                                <span>Pret</span>
+                                <button type="button" class="accessoryHeaderGearBtn" onclick="toggleAccessoryUnitPriceColumn()" title="Arată / ascunde prețul unitar" aria-label="Arată / ascunde prețul unitar">⚙</button>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="accessorySelectAllWrap">
+                                <input type="checkbox" id="accessorySelectAll" onchange="toggleAllAccessorySelections(this.checked)">
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="accessoriesTable"></tbody>
+            </table>
+        </div>
+
+        <div id="accessoryPriceSummary" style="margin-top:10px; font-weight:bold;text-align: right;">Accesorii: 0.00 RON</div>
+
+        <div class="featureActionRow no-print">
+            <button type="button" class="saveBtn" onclick="toggleCuttingOptimization()">Optimizări de tăiere</button>
+            <button type="button" class="importBtn" onclick="toggleGlassOrder()">Comandă sticlă</button>
+        </div>
+
+        <div id="cuttingOptimizationSection" class="reportCard card" style="display:none;">
+            <h2 style="margin-bottom:8px;">Optimizări de tăiere</h2>
+            <div id="cuttingOptimizationContent"></div>
+        </div>
+
+        <div id="glassOrderSection" class="reportCard card" style="display:none;">
+            <h2 style="margin-bottom:8px;">Comandă sticlă</h2>
+            <div id="glassOrderContent"></div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ============ SHEET: Adaugă / Editează piesă ============ -->
+<div class="overlay no-print" id="addPieceOverlay" onclick="if(event.target===this) hideAddPieceSheet()">
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Adaugă piesă">
+        <div class="sheetHandle"></div>
+
+        <div class="sheetHeader">
+            <h2>Configurează piesa</h2>
+            <button type="button" class="iconBtn" onclick="hideAddPieceSheet()" aria-label="Închide">✕</button>
+        </div>
+
+        <div class="sheetBody">
+
+            <label>Configurație</label>
+
+            <select id="config">
+                <option value="sliding_1">Glisantă 1 Ușă</option>
+                <option value="sliding_2">Glisantă 2 Uși</option>
+                <option value="sliding_3">Glisantă 3 Uși</option>
+                <option value="sliding_4">Glisantă 4 Uși</option>
+                <option value="sliding_4_nas">Glisantă 4 Uși cu Nas</option>
+                <option value="sliding_6_nas">Glisantă 6 Uși cu Nas (3 șine)</option>
+                <option value="single_door_inside">Ușă Deschidere Interioară</option>
+                <option value="single_door_outside">Ușă Deschidere Exterioară</option>
+                <option value="double_door_inside">Ușă Dublă Deschidere Interioară</option>
+                <option value="double_door_outside">Ușă Dublă Deschidere Exterioară</option>
+                <option value="fixed_window">Fereastră Fixă</option>
+                <option value="mobile_window">Fereastră Mobilă</option>
+                <option value="double_window_inversor">Fereastră Dublă cu Inversor</option>
+                <option value="double_window_fixed">Fereastră Dublă cu o Parte Fixă</option>
+            </select>
+
+            <div id="doorOptions" style="display: none;">
+
+                <div class="radioCompact">
+
+                    <label id="thermalBreakRow" style="display: none;">
+                        <input type="checkbox" id="thermalBreak">
+                        Rupere Termică
+                    </label>
+
+                    <label id="thresholdRow" style="display: none;">
+                        <input type="checkbox" id="threshold" disabled="">
+                        Prag
+                    </label>
+
+                    <label id="traversaRow" style="display: none;">
+                        <input type="checkbox" id="doorTraversa">
+                        Traversă
+                    </label>
+
+                    <div id="traversaOptions" style="display:none; margin-top:10px; padding:10px; border:1px solid var(--border); border-radius:8px;">
+                        <label style="margin:0 0 5px 0;">Orientare traversă</label>
+                        <select id="traversaOrientation" onchange="updateTraversaControls(true)">
+                            <option value="horizontal">Orizontală</option>
+                            <option value="vertical">Verticală</option>
+                        </select>
+
+                        <label id="traversaPositionLabel" style="margin:10px 0 5px 0;">Poziție de sus (mm)</label>
+                        <input type="text" inputmode="decimal" autocomplete="off" id="traversaPosition" value="1050" oninput="updateTraversaPositionHint()" onchange="normalizeTraversaPositionInput()" onblur="normalizeTraversaPositionInput()">
+
+                        <div id="traversaPositionHint" style="margin-top:6px;color:var(--text-faint);font-size:12px;line-height:1.35;">Implicit: 50% / 50%. La verticală poziția se măsoară din stânga.</div>
                     </div>
+
+                    <div id="tocContinuuRow" style="display: none;">
+                        <label>
+                            <input type="checkbox" id="tocContinuu" checked="">
+                            Toc Continuu
+                        </label>
+                    </div>
+
+                    <div id="sertizareRow" style="display: none;">
+                        <label id="sertizareLabel" style="display: none;">
+                            <input type="checkbox" id="sertizare">
+                            Sertizare
+                        </label>
+                    </div>
+
+                    <div id="giesseHingesRow" style="display: none;">
+                        <label>
+                            <input type="checkbox" id="giesseHinges" onchange="giesseHingesManuallySet=true;">
+                            Balamale GIESSE (uși grele)
+                        </label>
+                    </div>
+
+                    <div id="individualWidthsRow" style="display:none; margin-top:12px;">
+                        <label style="display:flex;align-items:center;gap:6px;margin:0 0 8px 0;font-weight:bold;">
+                            <input type="checkbox" id="individualWidthsEnabled" onchange="updateIndividualWidthsOptions()" style="width:auto;margin:0;">
+                            Lățimi individuale
+                        </label>
+                        <div id="individualWidthsInputs" style="display:none;grid-template-columns:1fr 1fr;gap:10px;">
+                            <div>
+                                <label id="individualWidth1Label" style="margin:0 0 5px 0;font-weight:bold;">Canat / parte 1 (mm)</label>
+                                <input type="text" inputmode="decimal" autocomplete="off" id="individualWidth1" value="">
+                            </div>
+                            <div>
+                                <label id="individualWidth2Label" style="margin:0 0 5px 0;font-weight:bold;">Canat / parte 2 (mm)</label>
+                                <input type="text" inputmode="decimal" autocomplete="off" id="individualWidth2" value="">
+                            </div>
+                        </div>
+                        <div id="individualWidthsHint" style="margin-top:6px;color:var(--text-faint);font-size:12px;line-height:1.3;"></div>
+                    </div>
+
+                    <div id="fixedPartSideRow" style="display:none; margin-top:10px;">
+                        <label style="display:flex;align-items:center;gap:6px;margin:0;font-weight:bold;">
+                            <input type="checkbox" id="fixedPartOnLeft" checked style="width:auto;margin:0;">
+                            Partea fixă în stânga (debifat = dreapta) — doar desenul vizual, nu schimbă calculul
+                        </label>
+                    </div>
+
                 </div>
-                <div class="settingsActionRow">
-                    <button type="button" class="saveBtn" onclick="saveHtmlSettings()">
-                        Salveaza preturi
-                    </button>
-                </div>
+            </div>
+
+            <div class="radioCompact">
+
+                <label id="glassLabelTermopan">
+                    <input type="radio" name="glass" value="termopan" checked="">
+                    <span>Termopan</span>
+                </label>
+
+                <label id="glassLabelSimple">
+                    <input type="radio" name="glass" value="simple">
+                    <span>Sticlă Simplă</span>
+                </label>
+
+                <label id="glassLabelRt32" style="display: none;">
+                    <input type="radio" name="glass" value="rt32">
+                    <span>32mm</span>
+                </label>
+
+            </div>
+
+            <label>Lățime (mm)</label>
+            <input type="number" id="width" value="1000">
+
+            <label>Înălțime (mm)</label>
+            <input type="number" id="height" value="2100">
+
+        </div>
+
+        <div class="sheetFooter">
+            <div class="addUndoRow">
+                <button class="addBtn" id="addUpdateBtn" onclick="addOrUpdatePiece()">Adaugă</button>
+                <button class="undoBtn" id="undoBtn" onclick="undoLastAction()" title="UNDO (Ctrl+Z)" aria-label="Undo" disabled="">↺</button>
             </div>
         </div>
 
-        <div class="card">
+    </div>
+</div>
 
-            <strong>Total Piese</strong>
+<!-- ============ SHEET: Proiect (nume, culoare, salvare, import, print) ============ -->
+<div class="overlay no-print" id="projectOverlay" onclick="if(event.target===this) hideProjectSheet()">
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Meniu proiect">
+        <div class="sheetHandle"></div>
 
-            <span id="totalPieces">0</span>
+        <div class="sheetHeader">
+            <h2>Proiect</h2>
+            <button type="button" class="iconBtn" onclick="hideProjectSheet()" aria-label="Închide">✕</button>
+        </div>
+
+        <div class="sheetBody">
+
+            <label>Nume lucrare</label>
+            <div class="jobNameRow">
+                <input type="text" id="jobName" value="Calculatie CLIENT" oninput="updateMainTitle()">
+                <button type="button" class="colorToggleBtn" id="colorToggleBtn" onclick="toggleJobColor()" style="background: rgb(242, 242, 242); color: rgb(17, 17, 17); border: 2px solid rgb(217, 119, 87);">ALB</button>
+            </div>
+
+            <div class="buttonRow">
+                <button class="importBtn" onclick="document.getElementById('importFile').click()">Importă Lucrare</button>
+                <button class="printBtn" onclick="document.title = 'Oferta_' + new Date().toISOString().slice(0,10);window.print()">Print / PDF</button>
+            </div>
+
+            <input type="file" id="importFile" class="hidden" accept=".json">
+
+            <button class="clearBtn" style="margin-top:12px;" onclick="clearJob()">Șterge Tot</button>
 
         </div>
 
-        <div class="card">
-
-            <strong>Total Bare</strong>
-
-            <span id="totalBars">0</span>
-
-        </div>
-
-        <div class="card">
-
-            <strong>Total Profile</strong>
-
-            <span id="totalProfiles">0.00 ml</span>
-
-        </div>
-
-        <div class="card" style="display:none">
-
-            <strong>Total Pierderi</strong>
-
-            <span id="totalWaste">0.00 ml</span>
-
+        <div class="sheetFooter">
+            <button class="saveBtn" onclick="saveProject()">Salvează Lucrare</button>
         </div>
 
     </div>
-
-</div>
-
-<div class="section">
-
-<h2>Profile Totale</h2>
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Cod</th>
-
-<th>Profil</th>
-
-<th>Bare</th>
-
-<th>Kg/Bară</th>
-
-<th>Kg Total</th>
-
-<th>ml</th>
-
-<th>Pierdere</th>
-
-</tr>
-
-</thead>
-
-<tbody id="profilesTable"></tbody>
-
-</table>
-
-<div id="profileWeightSummary" style="margin-top:8px; font-weight:bold;text-align: right;">STD: 0.00 kg | 0.00 RON<br>RT: 0.00 kg | 0.00 RON<br>Total: 0.00 RON</div>
-
-</div>
-
-<div class="section">
-
-<h2>Accesorii Totale</h2>
-
-<table class="accessoryTable">
-
-<thead>
-
-<tr>
-
-<th>Cod</th>
-
-<th>Accesoriu</th>
-
-<th>Cantitate</th>
-
-<th class="accessoryUnitPriceCol">Pret Unitar</th>
-
-<th>
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-        <span>Pret</span>
-        <button type="button" class="accessoryHeaderGearBtn" onclick="toggleAccessoryUnitPriceColumn()" title="Arată / ascunde prețul unitar" aria-label="Arată / ascunde prețul unitar">
-            ⚙
-        </button>
-    </div>
-</th>
-
-<th>
-    <div class="accessorySelectAllWrap">
-        
-        <input type="checkbox" id="accessorySelectAll" onchange="toggleAllAccessorySelections(this.checked)">
-    </div>
-</th>
-
-</tr>
-
-</thead>
-
-<tbody id="accessoriesTable"></tbody>
-
-</table>
-
-<div id="accessoryPriceSummary" style="margin-top:8px; font-weight:bold;text-align: right;">Accesorii: 0.00 RON</div>
-
-<div class="featureActionRow">
-    <button type="button" class="saveBtn" onclick="toggleCuttingOptimization()">Optimizări de tăiere</button>
-    <button type="button" class="importBtn" onclick="toggleGlassOrder()">Comandă sticlă</button>
-</div>
-
-<div id="cuttingOptimizationSection" class="reportCard card hiddenReport" style="display:none;">
-    <h2 style="margin-bottom:8px;">Optimizări de tăiere</h2>
-    <div id="cuttingOptimizationContent"></div>
-</div>
-
-<div id="glassOrderSection" class="reportCard card hiddenReport" style="display:none;">
-    <h2 style="margin-bottom:8px;">Comandă sticlă</h2>
-    <div id="glassOrderContent"></div>
-</div>
-
-</div>
-
-</div>
-
 </div>
 
 <script>
@@ -2816,13 +3094,13 @@ function updateColorToggleButton(){
         activeIsAlb ? 'ALB' : 'GRI';
 
     btn.style.background =
-        activeIsAlb ? '#f2f2f2' : '#8d8d8d';
+        activeIsAlb ? '#f2f0ea' : '#57524a';
 
     btn.style.color =
-        activeIsAlb ? '#111' : '#fff';
+        activeIsAlb ? '#1a1815' : '#f3ede2';
 
     btn.style.border =
-        activeIsAlb ? '2px solid #f54747' : '2px solid #f54747';
+        activeIsAlb ? '2px solid #d97757' : '2px solid #d97757';
 
 }
 
@@ -3115,7 +3393,103 @@ document.addEventListener('keydown', function(e){
 
     }
 
+    if(key === 'escape'){
+
+        hideAddPieceSheet();
+        hideProjectSheet();
+
+    }
+
 });
+
+/*
+    Bottom sheets (mobil): "Adaugă piesă" (formularul de configurare) și
+    "Proiect" (nume lucrare, culoare, salvare/import/print). Ambele sunt
+    simple overlay-uri ascunse/afișate prin clasa "sheetOpen"; nu țin
+    nicio stare proprie — formularul de dedesubt rămâne intact indiferent
+    dacă sheet-ul e vizibil sau nu.
+*/
+function showAddPieceSheet(){
+
+    const overlay = document.getElementById('addPieceOverlay');
+
+    if(!overlay){
+        return;
+    }
+
+    overlay.classList.add('sheetOpen');
+    document.body.classList.add('noScroll');
+
+    const body = overlay.querySelector('.sheetBody');
+
+    if(body){
+        body.scrollTop = 0;
+    }
+
+}
+
+function hideAddPieceSheet(){
+
+    const overlay = document.getElementById('addPieceOverlay');
+
+    if(!overlay){
+        return;
+    }
+
+    overlay.classList.remove('sheetOpen');
+
+    if(!document.getElementById('projectOverlay')?.classList.contains('sheetOpen')){
+        document.body.classList.remove('noScroll');
+    }
+
+}
+
+function openAddPieceSheet(){
+
+    // Butonul "+" din bara de sus înseamnă mereu "piesă nouă": dacă
+    // exista o editare neterminată, o anulăm ca formularul/butonul să
+    // reflecte corect starea de adăugare, nu de actualizare.
+    if(editingIndex >= 0){
+
+        editingIndex = -1;
+
+        updateAddButtonState();
+        renderJobList();
+
+    }
+
+    showAddPieceSheet();
+
+}
+
+function showProjectSheet(){
+
+    const overlay = document.getElementById('projectOverlay');
+
+    if(!overlay){
+        return;
+    }
+
+    overlay.classList.add('sheetOpen');
+    document.body.classList.add('noScroll');
+
+}
+
+function hideProjectSheet(){
+
+    const overlay = document.getElementById('projectOverlay');
+
+    if(!overlay){
+        return;
+    }
+
+    overlay.classList.remove('sheetOpen');
+
+    if(!document.getElementById('addPieceOverlay')?.classList.contains('sheetOpen')){
+        document.body.classList.remove('noScroll');
+    }
+
+}
 
 
 function updateDoorOptions(){
@@ -4293,66 +4667,35 @@ function getPanelMullionLengthMm(panel, hostWidthMm, hostHeightMm, thermalBreak)
 }
 
 /*
-    Baghetă (geamuire pe toc) pentru zona de panou "traversa" — CORECTAT
-    pe baza exemplului real PRO1272 (Componenta 001, 2620x2000mm RT,
-    Fix+Fix despărțit de montant WP78.33, 1930mm): fiecare zonă are
-    baghetă pe TOATE cele 4 laturi, inclusiv cea dinspre montant —
-    montantul NU elimină nevoia de baghetă pe acea latură (spre
-    deosebire de ce am presupus inițial). Deducerea e asimetrică:
-
-    - latura comună (perpendiculară pe montant, ex. înălțimea la un
-      panou stânga/dreapta): deducerea standard întreagă (81/85mm),
-      identică cu addToc/getFixedWindowBeadCuts — confirmat exact:
-      (2000-85)-29 = 1886mm în exemplul real.
-    - latura proprie panoului (paralelă cu montantul, ex. lățimea la
-      un panou stânga/dreapta): jumătate din deducerea de margine
-      exterioară (42.5/40.5mm) + jumătate din lățimea montantului
-      (25mm, montantul ocupă 50mm — vezi getTraversaModel.
-      clearDeductionMm) — confirmat exact: 1310-42.5-25=1242.5,
-      +15=1257.5mm, identic cu exemplul real (ambele zone, simetrice).
-
-    Această formulă reia exact logica deja folosită de
-    getFixedTraverseGlassPanes/getFixedWindowBeadCuts (ramura RT cu
-    traversă) pentru o fereastră fixă cu 2 zone — aici e adaptată
-    pentru cazul în care poziția montantului e dată direct de
-    lățimea/înălțimea panoului, nu de un procent traversaPositionMm.
-
-    Pentru varianta non-RT nu am un exemplu izolat de validare directă,
-    dar păstrăm același tipar (jumătate din deducerea de 81mm + 25mm),
-    consistent cu getTraversaModel.clearDeductionMm care nu diferă
-    după thermalBreak.
+    Baghetă (geamuire pe toc) pentru zona de panou "traversa": aceeași
+    formulă ca la fereastra fixă simplă (getFixedWindowBeadCuts, ramura
+    fără traversă: hCut=glassW+15, vCut=glassH-29), dar cu o singură
+    latură din cele 4 eliminată — cea care se sprijină pe montant/Teu,
+    unde bagheta nu mai e nevoie (montantul are propriul falț pe ambele
+    fețe). Deducerea de bază (81/85mm) e cea confirmată pentru panoul
+    fix; pentru latura de lângă montant folosim aceeași aproximare,
+    neavând un exemplu izolat separat pentru falțul de montant.
 */
 function getPanelBaghetaCutsMm(panel, hostWidthMm, hostHeightMm, thermalBreak){
     const dims = getPanelResolvedDimsMm(panel, hostWidthMm, hostHeightMm);
-    const fullEdgeDeduction = thermalBreak ? 85 : 81;
-    const edgeDeductionHalf = fullEdgeDeduction / 2;
-    const traverseHalf = 50 / 2; // getTraversaModel().clearDeductionMm / 2
+    const edgeDeduction = thermalBreak ? 85 : 81;
+    const glassW = Math.max(0, dims.widthMm - edgeDeduction);
+    const glassH = Math.max(0, dims.heightMm - edgeDeduction);
+    const hCut = glassW + 15;
+    const vCut = Math.max(0, glassH - 29);
 
     if(panel.position === 'left' || panel.position === 'right'){
-        // latura comună (înălțime) — neafectată de montant, deducere standard completă
-        const sharedGlassH = Math.max(0, hostHeightMm - fullEdgeDeduction);
-        const vCut = Math.max(0, sharedGlassH - 29);
-        // latura proprie (lățime) — deducere asimetrică (margine + jumătate montant)
-        const ownGlassW = Math.max(0, dims.widthMm - edgeDeductionHalf - traverseHalf);
-        const hCut = ownGlassW + 15;
-        const beadLengthMm = (2*hCut) + (2*vCut);
+        // lipsește o latură verticală (spre montant): sus + jos + 1 latură exterioară
         return {
-            cuts:[hCut,hCut,vCut,vCut],
-            beadLengthMm,
-            gasketLengthMm: beadLengthMm + 28
+            cuts:[hCut,hCut,vCut],
+            beadLengthMm: (2*hCut) + vCut
         };
     }
 
-    // panou sus: lățimea e comună (neafectată), înălțimea proprie are deducere asimetrică
-    const sharedGlassW = Math.max(0, hostWidthMm - fullEdgeDeduction);
-    const hCutShared = sharedGlassW + 15;
-    const ownGlassH = Math.max(0, dims.heightMm - edgeDeductionHalf - traverseHalf);
-    const vCutOwn = Math.max(0, ownGlassH - 29);
-    const beadLengthMmTop = (2*hCutShared) + (2*vCutOwn);
+    // panou sus: lipsește latura orizontală de jos (spre montant)
     return {
-        cuts:[hCutShared,hCutShared,vCutOwn,vCutOwn],
-        beadLengthMm: beadLengthMmTop,
-        gasketLengthMm: beadLengthMmTop + 28
+        cuts:[hCut,vCut,vCut],
+        beadLengthMm: hCut + (2*vCut)
     };
 }
 
@@ -4370,35 +4713,6 @@ function getCouplingLengthMm(panel, hostWidthMm, hostHeightMm){
         return Math.min(hostHeightMm, dims.heightMm);
     }
     return Math.min(hostWidthMm, dims.widthMm);
-}
-
-/*
-    Geamul zonei de panou "traversa": aceeași deducere asimetrică ca la
-    bagheta (getPanelBaghetaCutsMm) — confirmat exact pe exemplul real
-    PRO1272 (1242.5 x 1915.0mm, ambele zone, la o despărțire simetrică
-    1310+1310=2620mm). Diferă de getFixedGlassBase (simetrică, 81/85mm
-    pe toate laturile) tocmai prin deducerea redusă pe latura dinspre
-    montant. Panourile "cuplaj" NU folosesc această funcție — ele au
-    toc propriu complet pe toate laturile, deci getFixedGlassBase
-    (simetrică) rămâne corectă pentru ele.
-*/
-function getPanelTraversaGlassMm(panel, hostWidthMm, hostHeightMm, thermalBreak){
-    const dims = getPanelResolvedDimsMm(panel, hostWidthMm, hostHeightMm);
-    const fullEdgeDeduction = thermalBreak ? 85 : 81;
-    const edgeDeductionHalf = fullEdgeDeduction / 2;
-    const traverseHalf = 50 / 2;
-
-    if(panel.position === 'left' || panel.position === 'right'){
-        return {
-            widthMm: Math.max(0, dims.widthMm - edgeDeductionHalf - traverseHalf),
-            heightMm: Math.max(0, hostHeightMm - fullEdgeDeduction)
-        };
-    }
-
-    return {
-        widthMm: Math.max(0, hostWidthMm - fullEdgeDeduction),
-        heightMm: Math.max(0, dims.heightMm - edgeDeductionHalf - traverseHalf)
-    };
 }
 
 function getDoorBeadGeometry(wMeters,hMeters,thermalBreak=false,config='',threshold='without',traversa=null){
@@ -6181,30 +6495,8 @@ break;
                 const fixedPartWidth = individualLeafWidths[0];
                 const openingPartWidth = individualLeafWidths[1];
                 const openingSashHeight = height - 0.12;
-
-                /*
-                    CORECȚIE: formula veche (fixedPartWidth + 2*height)
-                    presupunea o baghetă pe doar 3 laturi (fără cea
-                    dinspre montant) și, pe deasupra, avea factorii de
-                    lățime/înălțime inversați geometric. Exemplul real
-                    PRO1272 (Componenta 001, 2620x2000mm RT, Fix+Fix
-                    despărțit de montant WP78.33) confirmă exact:
-                    fiecare zonă are baghetă pe TOATE cele 4 laturi,
-                    cu deducere asimetrică pe latura dinspre montant
-                    (42.5mm margine + 25mm jumătate montant, în loc de
-                    cei 85mm întregi) — vezi getPanelBaghetaCutsMm,
-                    care implementează exact această formulă validată
-                    și e reutilizată aici (partea fixă e echivalentă
-                    unui "panou stânga prin traversă" cu lățimea
-                    fixedPartWidth, față de o gazdă cu înălțimea height).
-                */
-                const fixedPartBead =
-                    getPanelBaghetaCutsMm(
-                        {position:'left', method:'traversa', widthMm:fixedPartWidth*1000, heightMm:height*1000},
-                        openingPartWidth*1000,
-                        height*1000,
-                        thermalBreak
-                    );
+                const fixedPartBagheta =
+                    fixedPartWidth + (2*height);
 
                 addWindowSash(
                     openingPartWidth,
@@ -6215,11 +6507,11 @@ break;
                 addValue(
                     profiles,
                     baghetaToc,
-                    fixedPartBead.beadLengthMm/1000
+                    fixedPartBagheta
                 );
 
-                addGarnituraBradut(fixedPartBead.gasketLengthMm/1000);
-                addGarnituraGeam(fixedPartBead.gasketLengthMm/1000);
+                addGarnituraBradut(fixedPartBagheta);
+                addGarnituraGeam(fixedPartBagheta);
 
                 addThermalSupportAccessory(
                     accessories,
@@ -6496,23 +6788,6 @@ addValue(
 
     const resolvedPanels = [];
 
-    /*
-        'FGS.78 Cale Toc' (suport toc pentru geamuire) — confirmat pe
-        exemplul real PRO1272 (Componenta 001, 2 zone Fix+Fix despărțite
-        de UN montant): oferta arată exact 4 bucăți, NU 8, deși există
-        2 zone geamuite direct pe toc. Concluzia: acest accesoriu e legat
-        de tocul EXTERIOR al întregii componente (4 suporturi, indiferent
-        câte zone toc-geamuite conține), nu de fiecare zonă în parte.
-        De aceea îl adăugăm o singură dată per piesă, nu per panou —
-        dacă gazda însăși e deja toc-geamuită (fixed_window, sau partea
-        fixă de la double_window_fixed) ori dacă mai există alt panou
-        Teu anterior, nu îl mai adăugăm din nou. Panourile CUPLAJ rămân
-        neschimbate (piese independente, cu propriul toc și deci propriul
-        set de 4 — nu intră în această deduplicare).
-    */
-    let fgsCaleTocAlreadyPresent =
-        (accessories['FGS.78 Cale Toc'] || 0) > 0;
-
     attachedPanels.forEach(rawPanel=>{
 
         const dims =
@@ -6567,18 +6842,15 @@ addValue(
                 panelBead.beadLengthMm/1000
             );
 
-            addGarnituraBradut(panelBead.gasketLengthMm/1000);
-            addGarnituraGeam(panelBead.gasketLengthMm/1000);
+            addGarnituraBradut(panelBead.beadLengthMm/1000);
+            addGarnituraGeam(panelBead.beadLengthMm/1000);
 
-            if(!fgsCaleTocAlreadyPresent){
-                addThermalSupportAccessory(
-                    accessories,
-                    thermalBreak,
-                    'FGS.78 Cale Toc',
-                    4
-                );
-                fgsCaleTocAlreadyPresent = thermalBreak;
-            }
+            addThermalSupportAccessory(
+                accessories,
+                thermalBreak,
+                'FGS.78 Cale Toc',
+                4
+            );
 
         }else{
 
@@ -7301,10 +7573,7 @@ function editPiece(index){
     updateAddButtonState();
     renderJobList();
 
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+    showAddPieceSheet();
 
     drawPreviewAll();
 
@@ -7620,38 +7889,22 @@ function getProfilePieces(piece){
             const openingH=h-0.12;
             const openingProfileCorrection=piece.thermalBreak?0.232:0.216;
             /*
-                Cercevea canat mobil și garniturile sunt adăugate pe
-                laturi individuale (nu ca perimetru agregat), ca să
-                poată fi debitate dintr-o bară reală. Sumele rămân
-                identice cu formula veche pentru zona mobilă:
+                Același bug structural ca mai sus: cercevea mobilă și
+                garniturile erau adăugate ca piese agregate (perimetru
+                complet), imposibil de debitat dintr-o bară reală. Sumele
+                rămân identice cu formula veche, doar descompuse pe laturi:
                   cercevea canat mobil: 4 laturi, 1/4 din corecție pe fiecare
                   garnitură canat mobil: 4 laturi, fără corecție (ca-n formula veche)
-                Bagheta zonei fixe (mai jos) folosește formula corectată
-                pe 4 laturi cu deducere asimetrică — vezi comentariul de
-                acolo.
+                  garnitură parte fixă: 3 laturi (lățime + 2 înălțimi, fără
+                  corecție) — partea fixă nu are latură dublă de lățime, formula
+                  veche (fixedPartWidth + 2*h) avea deja doar 3 laturi însumate.
             */
             const openingDedEach=openingProfileCorrection/4;
             const openingSw=openingPartWidth-openingDedEach;
             const openingSh=openingH-openingDedEach;
             addPieces(profileSet.fereastra,[openingSw,openingSw,openingSh,openingSh]);
             addPieces(getBaghetaSashProfile(profileSet,piece.glass),[openingPartWidth,openingPartWidth,openingH,openingH]);
-            /*
-                CORECȚIE: formula veche (fixedPartWidth + 2*h, pe 3
-                laturi) nu corespundea exemplelor reale — o zonă fixă
-                lângă montant are baghetă pe toate cele 4 laturi, cu
-                deducere asimetrică pe latura dinspre montant. Vezi
-                comentariul din calculatePiece (case 'double_window_fixed')
-                și getPanelBaghetaCutsMm pentru formula validată exact
-                pe exemplul PRO1272.
-            */
-            const fixedPartBeadCuts =
-                getPanelBaghetaCutsMm(
-                    {position:'left', method:'traversa', widthMm:fixedPartWidth*1000, heightMm:h*1000},
-                    openingPartWidth*1000,
-                    h*1000,
-                    piece.thermalBreak
-                );
-            addPieces(getBaghetaTocProfile(profileSet,piece.glass),fixedPartBeadCuts.cuts.map(v=>v/1000));
+            addPieces(getBaghetaTocProfile(profileSet,piece.glass),[fixedPartWidth,h,h]);
             addPieces(profileSet.traversaToc,[getFixedWindowTraverseCutMm(
                 getTraversaOrientation(piece),
                 w*1000,
@@ -8768,10 +9021,8 @@ function getFixedGlassBase(piece,widthMm,heightMm){
 */
 function addPanelGlassRows(rows, reportPiece, piece, hostWidthMm, hostHeightMm){
     (Array.isArray(piece.panels) ? piece.panels : []).forEach(panel=>{
-        const base =
-            panel.method === 'traversa'
-            ? getPanelTraversaGlassMm(panel, hostWidthMm, hostHeightMm, piece.thermalBreak)
-            : getFixedGlassBase(piece, getPanelResolvedDimsMm(panel, hostWidthMm, hostHeightMm).widthMm, getPanelResolvedDimsMm(panel, hostWidthMm, hostHeightMm).heightMm);
+        const dims = getPanelResolvedDimsMm(panel, hostWidthMm, hostHeightMm);
+        const base = getFixedGlassBase(piece, dims.widthMm, dims.heightMm);
         const label =
             (PANEL_POSITION_LABELS[panel.position] || panel.position) +
             (panel.method === 'traversa' ? ' (Teu)' : ' (Cuplaj)');
@@ -11074,6 +11325,8 @@ if(!piece){
     renderTotals();
 
     drawPreviewAll();
+
+    hideAddPieceSheet();
 
 }
 
